@@ -1,0 +1,48 @@
+spring:
+  application:    # Identify this application
+    name: SpringGateWay
+  server-uuid: ${random.uuid}
+  servlet:    # spring boot 2.x
+    multipart:
+      enabled: true
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+      location: ${java.io.tmpdir}
+
+server:     # Default Gateway server port
+  port: 8060
+
+# Zuul route rule : zuul.routes.[spring.application.name]=path
+zuul:
+  host:
+    connect-timeout-millis: 5000
+    socket-timeout-millis: 60000
+  routes:
+    APIServer:
+      path: /SPRINGAPI/**
+      url: SPRINGAPI
+      sensitiveHeaders:
+
+ribbon:     # Do load balancing without discovery service
+  eureka:
+    enabled: ${EUREKA_ENABLED:true}
+  ConnectTimeout: 5000
+  ReadTimeout: 60000
+  SocketTimeout: 60000
+ 
+
+
+management:     # If you set off security...
+  security:
+    enabled: false
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+      registry-fetch-interval-seconds: 5
+  instance:
+    preferIpAddress: true
+    hostname: ${spring.cloud.client.hostname}
+    lease-expiration-duration-in-seconds: 5
+    lease-renewal-interval-in-seconds: 10
