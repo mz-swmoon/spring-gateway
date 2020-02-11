@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: SpringZuul
+  cloud:
+    config:
+      uri: http://localhost:8004
