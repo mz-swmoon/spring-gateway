@@ -1,6 +1,6 @@
 spring:
   application:
-    name: SpringZuul
-  cloud:
-    config:
-      uri: http://localhost:8004
+    name: SpringGateway
+
+server:
+  port: ${PORT:8060}
